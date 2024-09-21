@@ -1,3 +1,11 @@
+import {
+  ImageRenderer,
+  InfoRow,
+  LabelRenderer,
+  LinkRenderer,
+} from "../components/FieldRenderer";
+import { DTYPES } from "../constants";
+
 const Sidebar = ({ mealDetails, isOpen, onClose }) => {
   if (!mealDetails) return null;
 
@@ -14,83 +22,79 @@ const Sidebar = ({ mealDetails, isOpen, onClose }) => {
   return (
     <div
       className={`fixed top-0 right-0 h-full bg-white shadow-lg transition-transform transform ${
-        isOpen ? 'translate-x-0' : 'translate-x-full'
-      } w-1/3 z-50`}
+        isOpen ? "translate-x-0" : "translate-x-full"
+      } w-2/5 z-50`}
+      style={{ borderRadius: "8px" }}
     >
-      <div className="p-4 overflow-auto h-full">
+      {/* Fixed header at the top */}
+      <div
+        className="p-4 bg-white w-full z-10 fixed top-0 right-0 flex justify-between items-center border-b border-gray-200"
+        style={{ height: "60px", borderRadius: "8px 0 0 8px" }}
+      >
+        <h3 className="text-2xl font-bold">{mealDetails.strMeal}</h3>
+
         <button
           onClick={onClose}
-          className="text-gray-600 hover:text-gray-900 mb-4 font-bold"
+          className="text-gray-600 hover:text-gray-900 font-bold text-2xl"
+          style={{ border: "none", background: "none", cursor: "pointer" }}
         >
-          Close
+          &times;
         </button>
+      </div>
 
-        <h2 className="text-2xl font-bold mb-4">{mealDetails.strMeal}</h2>
-
-        <img
+      <div
+        className="overflow-auto p-6"
+        style={{
+          height: "calc(100% - 60px)",
+          marginTop: "60px",
+        }}
+      >
+        <ImageRenderer
           src={mealDetails.strMealThumb}
           alt={mealDetails.strMeal}
-          className="w-full h-auto mb-4 rounded"
+          className="w-full h-auto mb-6 rounded-lg"
         />
+        <div className="mb-6 grid grid-cols-2 gap-x-4">
+          <InfoRow label={"Category"} value={mealDetails?.strCategory} />
+          <InfoRow label={"Area"} value={mealDetails?.strArea} />
 
-        <div className="mb-4">
-          <h3 className="text-lg font-semibold">Category:</h3>
-          <p>{mealDetails.strCategory}</p>
+          {mealDetails?.strYoutube && (
+            <InfoRow
+              label={"YouTube"}
+              value={mealDetails?.strYoutube}
+              dtype={DTYPES.LINK}
+            />
+          )}
+
+          {mealDetails?.strSource && (
+            <InfoRow
+              label={"Recipe"}
+              value={mealDetails?.strSource}
+              dtype={DTYPES.LINK}
+            />
+          )}
         </div>
 
-        <div className="mb-4">
-          <h3 className="text-lg font-semibold">Area:</h3>
-          <p>{mealDetails.strArea}</p>
-        </div>
-
-        {mealDetails.strTags && (
-          <div className="mb-4">
+        {mealDetails?.strTags && (
+          <div className="mb-6">
             <h3 className="text-lg font-semibold">Tags:</h3>
-            <p>{mealDetails.strTags.split(',').join(', ')}</p>
+            <p className="text-gray-700">
+              {mealDetails.strTags.split(",").join(", ")}
+            </p>
           </div>
         )}
-
-        <div className="mb-4">
+        <div className="mb-6">
           <h3 className="text-lg font-semibold">Ingredients:</h3>
-          <ul className="list-disc pl-5">
+          <ul className="list-disc pl-6 text-gray-700">
             {ingredients.map((ingredient, index) => (
               <li key={index}>{ingredient}</li>
             ))}
           </ul>
         </div>
-
-        <div className="mb-4">
+        <div className="mb-6">
           <h3 className="text-lg font-semibold">Instructions:</h3>
-          <p>{mealDetails.strInstructions}</p>
+          <p className="text-gray-700">{mealDetails.strInstructions}</p>
         </div>
-
-        {mealDetails.strYoutube && (
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold">Video Instructions:</h3>
-            <a
-              href={mealDetails.strYoutube}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:underline"
-            >
-              Watch on YouTube
-            </a>
-          </div>
-        )}
-
-        {mealDetails.strSource && (
-          <div className="mb-4">
-            <h3 className="text-lg font-semibold">Source:</h3>
-            <a
-              href={mealDetails.strSource}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:underline"
-            >
-              {mealDetails.strSource}
-            </a>
-          </div>
-        )}
       </div>
     </div>
   );
