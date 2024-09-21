@@ -40,7 +40,6 @@ export const useMealDetails = (mealId: string) => {
     (async function getMealDetails() {
       try {
         const response = await axios.get(`${API_URL}lookup.php?i=${mealId}`);
-        debugger
         setMealDetails(response.data.meals[0]);
       } catch (error) {
         console.error("Error fetching meal details", error);
