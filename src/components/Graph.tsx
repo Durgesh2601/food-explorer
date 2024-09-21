@@ -53,6 +53,7 @@ const Graph = () => {
 
   const handleMealClick = (meal) => {
     setSelectedMeal(meal); // Set meal to display in sidebar
+    setIsSidebarOpen(true);
   };
 
   const onNodeClick = (event, node) => {
@@ -68,7 +69,7 @@ const Graph = () => {
   const closeSidebar = () => {
     setIsSidebarOpen(false);
   };
-
+  console.log(isSidebarOpen, 'isSidebarOpen');
   return (
     <div style={{ display: "flex" }}>
       <div style={{ height: 500, width: "100%" }}>
@@ -89,7 +90,7 @@ const Graph = () => {
         mealDetails={mealDetails}
         isOpen={isSidebarOpen}
         onClose={closeSidebar}
-      />{" "}
+      />
     </div>
   );
 };
