@@ -1,19 +1,14 @@
-import {
-  ImageRenderer,
-  InfoRow,
-  LabelRenderer,
-  LinkRenderer,
-} from "../components/FieldRenderer";
-import { DTYPES } from "../constants";
+import { ImageRenderer, InfoRow } from "../components/FieldRenderer";
+import { SidebarProps } from "../types/types";
 
-const Sidebar = ({ mealDetails, isOpen, onClose }) => {
+const Sidebar = ({ mealDetails, isOpen, onClose }: SidebarProps) => {
   if (!mealDetails) return null;
 
   // Create an array of ingredients and their corresponding measurements
   const ingredients = [];
   for (let i = 1; i <= 20; i++) {
-    const ingredient = mealDetails[`strIngredient${i}`];
-    const measure = mealDetails[`strMeasure${i}`];
+    const ingredient = mealDetails[`strIngredient${i}` as keyof typeof mealDetails];
+    const measure = mealDetails[`strMeasure${i}` as keyof typeof mealDetails];
     if (ingredient && ingredient.trim()) {
       ingredients.push(`${measure} ${ingredient}`);
     }
@@ -55,34 +50,25 @@ const Sidebar = ({ mealDetails, isOpen, onClose }) => {
           className="w-full h-auto mb-6 rounded-lg"
         />
         <div className="mb-6 grid grid-cols-2 gap-x-4">
-          <InfoRow label={"Category"} value={mealDetails?.strCategory} />
-          <InfoRow label={"Area"} value={mealDetails?.strArea} />
+          <InfoRow label={"Category"} value={mealDetails.strCategory} />
+          <InfoRow label={"Area"} value={mealDetails.strArea} />
 
           {mealDetails?.strYoutube && (
-            <InfoRow
-              label={"YouTube"}
-              value={mealDetails?.strYoutube}
-              dtype={DTYPES.LINK}
-            />
+            <InfoRow label={"YouTube"} value={mealDetails.strYoutube} dtype="LINK" />
           )}
 
           {mealDetails?.strSource && (
-            <InfoRow
-              label={"Recipe"}
-              value={mealDetails?.strSource}
-              dtype={DTYPES.LINK}
-            />
+            <InfoRow label={"Recipe"} value={mealDetails.strSource} dtype="LINK" />
           )}
         </div>
 
         {mealDetails?.strTags && (
           <div className="mb-6">
             <h3 className="text-lg font-semibold">Tags:</h3>
-            <p className="text-gray-700">
-              {mealDetails.strTags.split(",").join(", ")}
-            </p>
+            <p className="text-gray-700">{mealDetails.strTags.split(",").join(", ")}</p>
           </div>
         )}
+
         <div className="mb-6">
           <h3 className="text-lg font-semibold">Ingredients:</h3>
           <ul className="list-disc pl-6 text-gray-700">
@@ -91,6 +77,7 @@ const Sidebar = ({ mealDetails, isOpen, onClose }) => {
             ))}
           </ul>
         </div>
+
         <div className="mb-6">
           <h3 className="text-lg font-semibold">Instructions:</h3>
           <p className="text-gray-700">{mealDetails.strInstructions}</p>

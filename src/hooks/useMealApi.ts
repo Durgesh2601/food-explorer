@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { UseCategories, UseMeals, UseMealDetails, Category, Meal, MealDetails } from "../types/types";
 
 const API_URL = "https://www.themealdb.com/api/json/v1/1/";
 
-export const useCategories = () => {
-  const [categories, setCategories] = useState([]);
+export const useCategories = (): UseCategories => {
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     axios
@@ -17,8 +18,8 @@ export const useCategories = () => {
 };
 
 // Fetch meals by category
-export const useMeals = (category) => {
-  const [meals, setMeals] = useState([]);
+export const useMeals = (category: string | null): UseMeals => {
+  const [meals, setMeals] = useState<Meal[]>([]);
 
   useEffect(() => {
     if (category) {
@@ -32,11 +33,12 @@ export const useMeals = (category) => {
   return meals;
 };
 
-export const useMealDetails = (mealId: string) => {
-  const [mealDetails, setMealDetails] = useState(null);
+export const useMealDetails = (mealId: string | null): UseMealDetails => {
+  const [mealDetails, setMealDetails] = useState<MealDetails | null>(null);
 
   useEffect(() => {
     if (!mealId) return;
+
     (async function getMealDetails() {
       try {
         const response = await axios.get(`${API_URL}lookup.php?i=${mealId}`);

@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { DTYPES } from "../constants/index";
+import {
+  DefaultValueRendererProps,
+  ImageRendererProps,
+  InfoRowProps,
+  LinkRendererProps,
+} from "../types/types";
 
 const Shimmer = () => (
   <div className="shimmer w-full h-full bg-gray-200 animate-shimmer"></div>
 );
 
-export const ImageRenderer = ({ src, alt, className }) => {
+export const ImageRenderer = ({ src, alt, className }: ImageRendererProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleImageLoad = () => {
@@ -30,7 +36,7 @@ export const ImageRenderer = ({ src, alt, className }) => {
   );
 };
 
-export const LinkRenderer = ({ link }) => (
+export const LinkRenderer = ({ link }: LinkRendererProps) => (
   <a
     href={link}
     target="_blank"
@@ -42,11 +48,15 @@ export const LinkRenderer = ({ link }) => (
   </a>
 );
 
-const DefaultValueRenderer = ({ value }) => (
+const DefaultValueRenderer = ({ value }: DefaultValueRendererProps) => (
   <p className="text-gray-700">{value}</p>
 );
 
-export const InfoRow = ({ label, value, dtype = DTYPES.STRING }) => {
+export const InfoRow = ({
+  label,
+  value,
+  dtype = DTYPES.STRING,
+}: InfoRowProps) => {
   const componentDtypeMap = {
     [DTYPES.LINK]: <LinkRenderer link={value} />,
     default: <DefaultValueRenderer value={value} />,
