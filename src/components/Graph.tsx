@@ -1,5 +1,11 @@
 import { useState } from "react";
-import ReactFlow, { MiniMap, Controls, Background, useNodesState, useEdgesState } from "reactflow";
+import ReactFlow, {
+  MiniMap,
+  Controls,
+  Background,
+  useNodesState,
+  useEdgesState,
+} from "reactflow";
 import { useCategories, useMeals, useMealDetails } from "../hooks/useMealAPI";
 import Sidebar from "./Sidebar";
 import { Category, Meal, NodeData } from "../types/types";
@@ -25,12 +31,14 @@ const Graph = () => {
   const mealDetails = useMealDetails(selectedMeal); // Fetch meal details
 
   const handleExploreClick = () => {
-    const newNodes = categories.slice(0, 5).map((category: Category, index: number) => ({
-      id: (index + 2).toString(),
-      type: "default",
-      data: { label: category.strCategory, id: category.idCategory },
-      position: { x: 100, y: 100 + index * 100 },
-    }));
+    const newNodes = categories
+      .slice(0, 5)
+      .map((category: Category, index: number) => ({
+        id: (index + 2).toString(),
+        type: "default",
+        data: { label: category.strCategory, id: category.idCategory },
+        position: { x: 100, y: 100 + index * 100 },
+      }));
 
     setNodes((prevNodes) => [...prevNodes, ...newNodes]);
   };
@@ -76,12 +84,16 @@ const Graph = () => {
           onNodeClick={onNodeClick}
           fitView
         >
-          <MiniMap />
+          {/* <MiniMap /> */}
           <Controls />
           <Background />
         </ReactFlow>
       </div>
-      <Sidebar mealDetails={mealDetails} isOpen={isSidebarOpen} onClose={closeSidebar} />
+      <Sidebar
+        mealDetails={mealDetails}
+        isOpen={isSidebarOpen}
+        onClose={closeSidebar}
+      />
     </div>
   );
 };
