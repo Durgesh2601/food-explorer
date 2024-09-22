@@ -6,7 +6,7 @@ The Meal Explorer Application is a web-based tool that allows users to explore m
 
 ### Deployed Link
 
-[[https://meal-explorer.vercel.app/](https://food-explorer-six.vercel.app/)](https://food-explorer-six.vercel.app/)
+[https://food-explorer-six.vercel.app/](https://food-explorer-six.vercel.app/)
 
 ## Features
 
