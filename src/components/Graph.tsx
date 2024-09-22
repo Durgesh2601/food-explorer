@@ -22,7 +22,7 @@ const initialNodes = [
 
 const Graph = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [edges, , onEdgesChange] = useEdgesState([]);
   const [selectedMeal, setSelectedMeal] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false); // Sidebar state
   const categories = useCategories();
