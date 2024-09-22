@@ -6,7 +6,7 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
 } from "reactflow";
-import { useCategories, useMeals, useMealDetails } from "../hooks/useMealAPI";
+import { useCategories, useMeals, useMealDetails } from "../hooks/useMealApi";
 import Sidebar from "./Sidebar";
 import { Category, Meal, NodeData } from "../types/types";
 import "reactflow/dist/style.css";
