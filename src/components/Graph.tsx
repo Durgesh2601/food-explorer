@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ReactFlow, {
-  MiniMap,
+  // MiniMap,
   Controls,
   Background,
   useNodesState,
@@ -24,11 +24,11 @@ const Graph = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, , onEdgesChange] = useEdgesState([]);
   const [selectedMeal, setSelectedMeal] = useState<string | null>(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false); // Sidebar state
-  const categories = useCategories();
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const categories = useCategories();
   const meals = useMeals(selectedCategory);
-  const mealDetails = useMealDetails(selectedMeal); // Fetch meal details
+  const mealDetails = useMealDetails(selectedMeal);
 
   const handleExploreClick = () => {
     const newNodes = categories
@@ -55,7 +55,7 @@ const Graph = () => {
   };
 
   const handleMealClick = (meal: string) => {
-    setSelectedMeal(meal); // Set meal to display in sidebar
+    setSelectedMeal(meal);
     setIsSidebarOpen(true);
   };
 
@@ -65,7 +65,7 @@ const Graph = () => {
     } else if (node.id.startsWith("2")) {
       handleCategoryClick(node.data.label);
     } else if (node.id.startsWith("meal")) {
-      handleMealClick(node.data.id!); // Show meal details
+      handleMealClick(node.data.id!);
     }
   };
 
