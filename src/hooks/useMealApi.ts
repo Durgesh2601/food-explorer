@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { UseCategories, UseMeals, UseMealDetails, Category, Meal, MealDetails } from "../types/types";
+import {
+  UseCategories,
+  UseMeals,
+  UseMealDetails,
+  Category,
+  Meal,
+  MealDetails,
+} from "../types/types";
 
 const API_URL = "https://www.themealdb.com/api/json/v1/1/";
 
@@ -8,10 +15,16 @@ export const useCategories = (): UseCategories => {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    axios
-      .get(`${API_URL}categories.php`)
-      .then((response) => setCategories(response.data.categories))
-      .catch((error) => console.error("Error fetching categories", error));
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`${API_URL}categories.php`);
+        setCategories(response.data.categories);
+      } catch (error) {
+        console.error("Error fetching categories", error);
+      }
+    };
+
+    fetchCategories();
   }, []);
 
   return categories;
@@ -22,12 +35,18 @@ export const useMeals = (category: string | null): UseMeals => {
   const [meals, setMeals] = useState<Meal[]>([]);
 
   useEffect(() => {
-    if (category) {
-      axios
-        .get(`${API_URL}filter.php?c=${category}`)
-        .then((response) => setMeals(response.data.meals))
-        .catch((error) => console.error("Error fetching meals", error));
-    }
+    const fetchMeals = async () => {
+      if (!category) return;
+
+      try {
+        const response = await axios.get(`${API_URL}filter.php?c=${category}`);
+        setMeals(response.data.meals);
+      } catch (error) {
+        console.error("Error fetching meals", error);
+      }
+    };
+
+    fetchMeals();
   }, [category]);
 
   return meals;
@@ -37,16 +56,18 @@ export const useMealDetails = (mealId: string | null): UseMealDetails => {
   const [mealDetails, setMealDetails] = useState<MealDetails | null>(null);
 
   useEffect(() => {
-    if (!mealId) return;
+    const fetchMealDetails = async () => {
+      if (!mealId) return;
 
-    (async function getMealDetails() {
       try {
         const response = await axios.get(`${API_URL}lookup.php?i=${mealId}`);
         setMealDetails(response.data.meals[0]);
       } catch (error) {
         console.error("Error fetching meal details", error);
       }
-    })();
+    };
+
+    fetchMealDetails();
   }, [mealId]);
 
   return mealDetails;
